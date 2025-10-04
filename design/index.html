@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI工程技能学习系统 - 微信小程序高保真原型</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --wechat-green: #07C160;
+            --wechat-blue: #10AEFF;
+            --wechat-orange: #FF9500;
+            --wechat-red: #FA5151;
+            --wechat-purple: #8A2BE2;
+            --wechat-yellow: #FFCC00;
+            --wechat-gray-1: #F7F7F7;
+            --wechat-gray-2: #EDEDED;
+            --wechat-gray-3: #D9D9D9;
+            --wechat-gray-4: #B2B2B2;
+            --wechat-gray-5: #8B8B8B;
+            --wechat-gray-6: #5B5B5B;
+            --wechat-gray-7: #353535;
+            --wechat-text-primary: #000000;
+            --wechat-text-secondary: #888888;
+            --wechat-text-tertiary: #B2B2B2;
+            --wechat-bg: #F7F7F7;
+            --wechat-card-bg: #FFFFFF;
+            --wechat-divider: #EDEDED;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 20px 0;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .screens-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .screen-item {
+            text-align: center;
+        }
+
+        .screen-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 16px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .screen-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            max-width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        .wechat-device {
+            width: 375px;
+            height: 667px;
+            background: #000;
+            border-radius: 40px;
+            padding: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            margin: 0 auto;
+            transform: scale(0.9);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .wechat-device:hover {
+            transform: scale(0.95);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+        }
+
+        .wechat-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--wechat-bg);
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .screen-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 30px;
+        }
+
+        .features-section {
+            margin-top: 60px;
+            text-align: center;
+            color: white;
+        }
+
+        .features-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+            color: var(--wechat-yellow);
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-description {
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        .navigation-tips {
+            margin-top: 40px;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tips-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tips-content {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        .tips-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tips-list li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .tips-list li::before {
+            content: '✓';
+            color: var(--wechat-green);
+            font-weight: bold;
+            margin-top: 2px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .responsive-notice {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .screens-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .wechat-device {
+                transform: scale(0.8);
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .header p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header fade-in">
+        <h1>AI工程技能学习系统</h1>
+        <p>基于微信小程序设计规范的高保真交互原型<br>专为AI工程部部长及团队打造的游戏化学习体验</p>
+    </div>
+
+    <div class="responsive-notice fade-in">
+        <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
+        <strong>提示：</strong>这是一个完整的微信小程序高保真原型展示页面，所有界面都严格遵循微信小程序设计规范
+    </div>
+
+    <div class="screens-grid">
+        <!-- 首页 -->
+        <div class="screen-item fade-in">
+            <h2 class="screen-title">首页</h2>
+            <p class="screen-description">用户信息卡片、学习进度概览、推荐技能、快速入口等核心功能展示</p>
+            <div class="wechat-device">
+                <div class="wechat-screen">
+                    <iframe src="home.html" class="screen-frame"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- 技能树 -->
+        <div class="screen-item fade-in">
+            <h2 class="screen-title">技能树</h2>
+            <p class="screen-description">三大技能分支可视化展示、技能点网格布局、学习进度追踪</p>
+            <div class="wechat-device">
+                <div class="wechat-screen">
+                    <iframe src="skill-tree.html" class="screen-frame"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- 技能详情 -->
+        <div class="screen-item fade-in">
+            <h2 class="screen-title">技能详情</h2>
+            <p class="screen-description">理论知识展示、实践任务列表、测试入口、学习路径指引</p>
+            <div class="wechat-device">
+                <div class="wechat-screen">
+                    <iframe src="skill-detail.html" class="screen-frame"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- 个人中心 -->
+        <div class="screen-item fade-in">
+            <h2 class="screen-title">个人中心</h2>
+            <p class="screen-description">用户资料管理、学习统计分析、成就系统展示、活动记录</p>
+            <div class="wechat-device">
+                <div class="wechat-screen">
+                    <iframe src="profile.html" class="screen-frame"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- 测试页面 -->
+        <div class="screen-item fade-in">
+            <h2 class="screen-title">技能测试</h2>
+            <p class="screen-description">题目展示与交互、选项选择、实时反馈、结果统计与奖励</p>
+            <div class="wechat-device">
+                <div class="wechat-screen">
+                    <iframe src="quiz.html" class="screen-frame"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 功能特性 -->
+    <div class="features-section fade-in">
+        <h2 class="features-title">核心功能特性</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3 class="feature-title">游戏化学习体验</h3>
+                <p class="feature-description">等级系统、成就徽章、EXP经验值奖励，让学习充满乐趣和成就感</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-tree"></i>
+                </div>
+                <h3 class="feature-title">技能树系统</h3>
+                <p class="feature-description">三大技能分支，渐进式解锁机制，清晰的技能掌握路径指引</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="feature-title">学习数据分析</h3>
+                <p class="feature-description">详细的学习统计、进度可视化、个人成长轨迹记录</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <h3 class="feature-title">技能认证系统</h3>
+                <p class="feature-description">通过测试获得技能认证，建立专业能力和可信度</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3 class="feature-title">微信原生体验</h3>
+                <p class="feature-description">严格遵循微信小程序设计规范，提供流畅自然的用户体验</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="feature-title">团队协作功能</h3>
+                <p class="feature-description">团队排行、学习分享、协作讨论，促进团队共同成长</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 使用提示 -->
+    <div class="navigation-tips fade-in">
+        <h3 class="tips-title">
+            <i class="fas fa-lightbulb"></i>
+            设计说明与特点
+        </h3>
+        <div class="tips-content">
+            <ul class="tips-list">
+                <li><strong>严格遵循微信小程序设计规范</strong>：包括导航栏高度(44px)、胶囊按钮、TabBar等标准组件</li>
+                <li><strong>标准色彩体系</strong>：使用微信官方色彩方案，主色#07C160、辅助色#10AEFF等</li>
+                <li><strong>移动端优先设计</strong>：完美适配iPhone 6/7/8屏幕尺寸(375x667px)</li>
+                <li><strong>现代化视觉风格</strong>：简洁清晰的界面设计，适合技术学习产品定位</li>
+                <li><strong>交互细节优化</strong>：包含hover、active等交互状态，提供流畅的用户体验</li>
+                <li><strong>完整功能覆盖</strong>：从学习浏览到技能测试，涵盖学习系统的核心流程</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // 添加页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.style.opacity = '0';
+                    element.style.transform = 'translateY(30px)';
+                    element.style.animation = 'fadeIn 0.8s ease-out forwards';
+                }, index * 100);
+            });
+        });
+
+        // 为iframe添加加载状态处理
+        const iframes = document.querySelectorAll('.screen-frame');
+        iframes.forEach(iframe => {
+            iframe.addEventListener('load', function() {
+                console.log('页面加载完成:', iframe.src);
+            });
+        });
+    </script>
+</body>
+</html>

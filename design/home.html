@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI工程技能学习系统 - 首页</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --wechat-green: #07C160;
+            --wechat-blue: #10AEFF;
+            --wechat-purple: #8A2BE2;
+            --wechat-orange: #FF9500;
+            --wechat-red: #FA5151;
+            --wechat-yellow: #FFCC00;
+            --wechat-gray-1: #F7F7F7;
+            --wechat-gray-2: #EDEDED;
+            --wechat-gray-3: #D9D9D9;
+            --wechat-gray-4: #B2B2B2;
+            --wechat-gray-5: #8B8B8B;
+            --wechat-gray-6: #5B5B5B;
+            --wechat-gray-7: #353535;
+            --wechat-text-primary: #000000;
+            --wechat-text-secondary: #888888;
+            --wechat-text-tertiary: #B2B2B2;
+            --wechat-bg: #F7F7F7;
+            --wechat-card-bg: #FFFFFF;
+            --wechat-divider: #EDEDED;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .wechat-device {
+            width: 375px;
+            height: 667px;
+            background: #000;
+            border-radius: 40px;
+            padding: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .wechat-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--wechat-bg);
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .wechat-navbar {
+            height: 44px;
+            background: var(--wechat-card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 1px solid var(--wechat-divider);
+        }
+
+        .wechat-navbar-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--wechat-text-primary);
+        }
+
+        .wechat-capsule {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 87px;
+            height: 32px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .wechat-capsule-dot {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .wechat-capsule-dot:first-child {
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .wechat-content {
+            height: calc(100% - 44px - 50px);
+            overflow-y: auto;
+            background: var(--wechat-bg);
+        }
+
+        .wechat-tabbar {
+            height: 50px;
+            background: var(--wechat-card-bg);
+            display: flex;
+            align-items: center;
+            border-top: 1px solid var(--wechat-divider);
+        }
+
+        .wechat-tabbar-item {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--wechat-text-tertiary);
+            font-size: 10px;
+            cursor: pointer;
+        }
+
+        .wechat-tabbar-item.active {
+            color: var(--wechat-green);
+        }
+
+        .wechat-tabbar-icon {
+            font-size: 24px;
+            margin-bottom: 2px;
+        }
+
+        .user-card {
+            background: linear-gradient(135deg, var(--wechat-blue), var(--wechat-purple)),
+                        url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=800&h=400&fit=crop&auto=format');
+            background-size: cover, cover;
+            background-position: center, center;
+            background-blend-mode: overlay, normal;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 16px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 12px;
+        }
+
+        .level-badge {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        .progress-section {
+            margin: 16px;
+            background: var(--wechat-card-bg);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .progress-item {
+            margin-bottom: 16px;
+        }
+
+        .progress-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--wechat-text-secondary);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--wechat-gray-2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--wechat-green);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .skill-card {
+            background: var(--wechat-card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .skill-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            margin-right: 12px;
+        }
+
+        .skill-info {
+            flex: 1;
+        }
+
+        .skill-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--wechat-text-primary);
+            margin-bottom: 4px;
+        }
+
+        .skill-status {
+            font-size: 12px;
+            color: var(--wechat-text-secondary);
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 12px;
+            margin: 16px;
+        }
+
+        .quick-action {
+            flex: 1;
+            background: var(--wechat-card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-action:hover {
+            background: var(--wechat-gray-1);
+            transform: scale(1.02);
+        }
+
+        .quick-action-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .quick-action-text {
+            font-size: 12px;
+            color: var(--wechat-text-secondary);
+        }
+
+        .exp-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .exp-fill {
+            height: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .achievement-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 32px;
+            height: 32px;
+            background: var(--wechat-orange);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--wechat-text-primary);
+            margin: 16px;
+            margin-bottom: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="wechat-device">
+        <div class="wechat-screen">
+            <!-- 顶部导航栏 -->
+            <div class="wechat-navbar">
+                <div class="wechat-navbar-title">AI工程技能学习</div>
+                <div class="wechat-capsule">
+                    <div class="wechat-capsule-dot">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="wechat-capsule-dot">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 内容区域 -->
+            <div class="wechat-content">
+                <!-- 用户信息卡片 -->
+                <div class="user-card fade-in">
+                    <div class="achievement-badge">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="flex items-center">
+                        <div>
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=face&auto=format" alt="用户头像" class="user-avatar">
+                            <h2 class="text-xl font-bold mt-2">张工程师</h2>
+                            <p class="text-sm opacity-90">AI工程部部长</p>
+                            <div class="level-badge">Level 5</div>
+                            <div class="exp-bar">
+                                <div class="exp-fill" style="width: 65%;"></div>
+                            </div>
+                            <p class="text-xs mt-1 opacity-75">经验值: 3,250 / 5,000</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 学习进度概览 -->
+                <div class="section-title">学习进度</div>
+                <div class="progress-section fade-in">
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>基础层技能</span>
+                            <span style="color: var(--wechat-green); font-weight: 600;">75%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%;"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>框架层技能</span>
+                            <span style="color: var(--wechat-blue); font-weight: 600;">45%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%; background: var(--wechat-blue);"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>平台层技能</span>
+                            <span style="color: var(--wechat-orange); font-weight: 600;">30%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%; background: var(--wechat-orange);"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 推荐技能 -->
+                <div class="section-title">推荐学习</div>
+                <div class="skill-card fade-in">
+                    <div class="skill-header">
+                        <div class="skill-icon" style="background: var(--wechat-blue);">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="skill-info">
+                            <div class="skill-title">深度学习框架</div>
+                            <div class="skill-status">可学习 • 预计2小时</div>
+                        </div>
+                        <i class="fas fa-chevron-right" style="color: var(--wechat-text-tertiary);"></i>
+                    </div>
+                    <p class="text-sm text-gray-600">掌握主流深度学习框架的核心概念和应用</p>
+                </div>
+
+                <div class="skill-card fade-in">
+                    <div class="skill-header">
+                        <div class="skill-icon" style="background: var(--wechat-orange);">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <div class="skill-info">
+                            <div class="skill-title">云原生AI平台</div>
+                            <div class="skill-status">可学习 • 预计3小时</div>
+                        </div>
+                        <i class="fas fa-chevron-right" style="color: var(--wechat-text-tertiary);"></i>
+                    </div>
+                    <p class="text-sm text-gray-600">了解云原生环境下的AI应用部署和管理</p>
+                </div>
+
+                <!-- 快速入口 -->
+                <div class="quick-actions fade-in">
+                    <div class="quick-action">
+                        <div class="quick-action-icon" style="color: var(--wechat-green);">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="quick-action-text">学习记录</div>
+                    </div>
+                    <div class="quick-action">
+                        <div class="quick-action-icon" style="color: var(--wechat-blue);">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="quick-action-text">学习统计</div>
+                    </div>
+                    <div class="quick-action">
+                        <div class="quick-action-icon" style="color: var(--wechat-orange);">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="quick-action-text">成就中心</div>
+                    </div>
+                    <div class="quick-action">
+                        <div class="quick-action-icon" style="color: var(--wechat-red);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="quick-action-text">团队排行</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 底部TabBar -->
+            <div class="wechat-tabbar">
+                <div class="wechat-tabbar-item active">
+                    <i class="fas fa-home wechat-tabbar-icon"></i>
+                    <div class="wechat-tabbar-text">首页</div>
+                </div>
+                <div class="wechat-tabbar-item">
+                    <i class="fas fa-tree wechat-tabbar-icon"></i>
+                    <div class="wechat-tabbar-text">技能树</div>
+                </div>
+                <div class="wechat-tabbar-item">
+                    <i class="fas fa-graduation-cap wechat-tabbar-icon"></i>
+                    <div class="wechat-tabbar-text">学习</div>
+                </div>
+                <div class="wechat-tabbar-item">
+                    <i class="fas fa-user wechat-tabbar-icon"></i>
+                    <div class="wechat-tabbar-text">我的</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

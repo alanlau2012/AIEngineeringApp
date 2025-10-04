@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI工程技能学习系统 - 技能详情</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --wechat-green: #07C160;
+            --wechat-blue: #10AEFF;
+            --wechat-orange: #FF9500;
+            --wechat-red: #FA5151;
+            --wechat-gray-1: #F7F7F7;
+            --wechat-gray-2: #EDEDED;
+            --wechat-gray-3: #D9D9D9;
+            --wechat-gray-4: #B2B2B2;
+            --wechat-gray-5: #8B8B8B;
+            --wechat-gray-6: #5B5B5B;
+            --wechat-gray-7: #353535;
+            --wechat-text-primary: #000000;
+            --wechat-text-secondary: #888888;
+            --wechat-text-tertiary: #B2B2B2;
+            --wechat-bg: #F7F7F7;
+            --wechat-card-bg: #FFFFFF;
+            --wechat-divider: #EDEDED;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .wechat-device {
+            width: 375px;
+            height: 667px;
+            background: #000;
+            border-radius: 40px;
+            padding: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .wechat-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--wechat-bg);
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .wechat-navbar {
+            height: 44px;
+            background: var(--wechat-card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 1px solid var(--wechat-divider);
+        }
+
+        .wechat-navbar-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--wechat-text-primary);
+        }
+
+        .wechat-navbar-back {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--wechat-text-primary);
+            cursor: pointer;
+        }
+
+        .wechat-capsule {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 87px;
+            height: 32px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .wechat-capsule-dot {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .wechat-capsule-dot:first-child {
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .wechat-content {
+            height: calc(100% - 44px);
+            overflow-y: auto;
+            background: var(--wechat-bg);
+        }
+
+        .skill-header {
+            background: linear-gradient(135deg, var(--wechat-blue), var(--wechat-purple)),
+                        url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=800&h=400&fit=crop&auto=format');
+            background-size: cover, cover;
+            background-position: center, center;
+            background-blend-mode: overlay, normal;
+            color: white;
+            padding: 24px 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-icon-large {
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .skill-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .skill-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 16px;
+        }
+
+        .skill-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+        }
+
+        .skill-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .content-section {
+            background: var(--wechat-card-bg);
+            margin: 16px;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--wechat-divider);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--wechat-text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--wechat-gray-1);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--wechat-blue);
+        }
+
+        .theory-content {
+            line-height: 1.6;
+            color: var(--wechat-text-secondary);
+            font-size: 15px;
+        }
+
+        .theory-image {
+            width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .theory-point {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+
+        .theory-point-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--wechat-green);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .theory-point-text {
+            flex: 1;
+            line-height: 1.5;
+        }
+
+        .task-card {
+            background: var(--wechat-gray-1);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .task-card:hover {
+            background: var(--wechat-gray-2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-card.completed {
+            border-color: var(--wechat-green);
+            background: rgba(7, 193, 96, 0.05);
+        }
+
+        .task-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .task-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--wechat-text-primary);
+        }
+
+        .task-status {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .task-status.pending {
+            background: var(--wechat-gray-2);
+            color: var(--wechat-text-secondary);
+        }
+
+        .task-status.completed {
+            background: var(--wechat-green);
+            color: white;
+        }
+
+        .task-description {
+            font-size: 14px;
+            color: var(--wechat-text-secondary);
+            line-height: 1.4;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin: 16px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            flex: 1;
+            height: 48px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            outline: none;
+        }
+
+        .action-btn.primary {
+            background: var(--wechat-green);
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            background: var(--wechat-green-light);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(7, 193, 96, 0.3);
+        }
+
+        .action-btn.secondary {
+            background: var(--wechat-gray-2);
+            color: var(--wechat-text-primary);
+        }
+
+        .action-btn.secondary:hover {
+            background: var(--wechat-gray-3);
+        }
+
+        .progress-indicator {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .skill-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .difficulty-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 12px;
+        }
+
+        .difficulty-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .difficulty-dot.filled {
+            background: white;
+        }
+
+        .requirements-list {
+            background: rgba(7, 193, 96, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+        }
+
+        .requirement-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--wechat-green);
+        }
+
+        .requirement-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .requirement-item.met {
+            color: var(--wechat-green);
+        }
+
+        .requirement-item.unmet {
+            color: var(--wechat-text-secondary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .floating-action {
+            position: fixed;
+            bottom: 80px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            background: var(--wechat-green);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(7, 193, 96, 0.3);
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 100;
+        }
+
+        .floating-action:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(7, 193, 96, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="wechat-device">
+        <div class="wechat-screen">
+            <!-- 顶部导航栏 -->
+            <div class="wechat-navbar">
+                <div class="wechat-navbar-back">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="wechat-navbar-title">深度学习框架</div>
+                <div class="wechat-capsule">
+                    <div class="wechat-capsule-dot">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <div class="wechat-capsule-dot">
+                        <i class="fas fa-bookmark"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 内容区域 -->
+            <div class="wechat-content">
+                <!-- 技能头部信息 -->
+                <div class="skill-header fade-in">
+                    <div class="progress-indicator">学习中 45%</div>
+                    <div class="skill-icon-large">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h1 class="skill-title">深度学习框架</h1>
+                    <p class="skill-subtitle">掌握主流深度学习框架的核心概念和实际应用</p>
+
+                    <div class="skill-meta">
+                        <div class="skill-meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span>预计 2 小时</span>
+                        </div>
+                        <div class="skill-meta-item">
+                            <i class="fas fa-signal"></i>
+                            <span>中级</span>
+                        </div>
+                        <div class="skill-meta-item">
+                            <i class="fas fa-star"></i>
+                            <span>150 EXP</span>
+                        </div>
+                    </div>
+
+                    <div class="difficulty-indicator">
+                        <span style="font-size: 12px; margin-right: 4px;">难度：</span>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot"></div>
+                        <div class="difficulty-dot"></div>
+                    </div>
+
+                    <div class="skill-tags">
+                        <div class="skill-tag">深度学习</div>
+                        <div class="skill-tag">TensorFlow</div>
+                        <div class="skill-tag">PyTorch</div>
+                        <div class="skill-tag">神经网络</div>
+                    </div>
+
+                    <div class="requirements-list">
+                        <div class="requirement-item met">
+                            <i class="fas fa-check-circle"></i>
+                            <span>机器学习基础</span>
+                        </div>
+                        <div class="requirement-item met">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Python编程</span>
+                        </div>
+                        <div class="requirement-item unmet">
+                            <i class="fas fa-circle"></i>
+                            <span>数据预处理 (进行中)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 理论知识部分 -->
+                <div class="content-section fade-in">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="section-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <span>理论知识</span>
+                        </div>
+                        <span style="font-size: 14px; color: var(--wechat-text-secondary);">15分钟</span>
+                    </div>
+
+                    <div class="theory-content">
+                        <p style="margin-bottom: 16px;">
+                            深度学习框架是构建和训练神经网络的软件工具，它们提供了高级API和优化算法，让开发者能够更高效地实现复杂的深度学习模型。
+                        </p>
+
+                        <div class="theory-point">
+                            <div class="theory-point-icon">1</div>
+                            <div class="theory-point-text">
+                                <strong>TensorFlow</strong>：Google开发的开源框架，支持大规模分布式训练，适合生产环境部署。
+                            </div>
+                        </div>
+
+                        <div class="theory-point">
+                            <div class="theory-point-icon">2</div>
+                            <div class="theory-point-text">
+                                <strong>PyTorch</strong>：Facebook开发的动态图框架，具有直观的API和强大的研究社区支持。
+                            </div>
+                        </div>
+
+                        <div class="theory-point">
+                            <div class="theory-point-icon">3</div>
+                            <div class="theory-point-text">
+                                <strong>Keras</strong>：高级神经网络API，可以运行在TensorFlow、CNTK或Theano之上，适合快速原型开发。
+                            </div>
+                        </div>
+
+                        <div class="theory-point">
+                            <div class="theory-point-icon">4</div>
+                            <div class="theory-point-text">
+                                <strong>核心概念</strong>：张量、自动微分、计算图、层、激活函数、损失函数、优化器等。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 实践任务部分 -->
+                <div class="content-section fade-in">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="section-icon">
+                                <i class="fas fa-tasks"></i>
+                            </div>
+                            <span>实践任务</span>
+                        </div>
+                        <span style="font-size: 14px; color: var(--wechat-text-secondary);">3个任务</span>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-header">
+                            <div class="task-title">环境配置与基础操作</div>
+                            <div class="task-status completed">已完成</div>
+                        </div>
+                        <div class="task-description">
+                            安装TensorFlow/PyTorch，学习张量操作、GPU配置等基础功能
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-header">
+                            <div class="task-title">构建第一个神经网络</div>
+                            <div class="task-status pending">进行中</div>
+                        </div>
+                        <div class="task-description">
+                            使用框架API构建简单的全连接神经网络，实现MNIST手写数字识别
+                        </div>
+                    </div>
+
+                    <div class="task-card">
+                        <div class="task-header">
+                            <div class="task-title">模型训练与优化</div>
+                            <div class="task-status pending">待开始</div>
+                        </div>
+                        <div class="task-description">
+                            学习训练循环、验证集评估、早停策略、学习率调优等高级技术
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 技能测试部分 -->
+                <div class="content-section fade-in">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="section-icon">
+                                <i class="fas fa-clipboard-check"></i>
+                            </div>
+                            <span>技能测试</span>
+                        </div>
+                        <span style="font-size: 14px; color: var(--wechat-text-secondary);">5道题</span>
+                    </div>
+
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 48px; color: var(--wechat-gray-3); margin-bottom: 16px;">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <p style="font-size: 16px; color: var(--wechat-text-secondary); margin-bottom: 8px;">
+                            完成学习任务后解锁测试
+                        </p>
+                        <p style="font-size: 14px; color: var(--wechat-text-tertiary);">
+                            通过测试可获得技能认证和经验值奖励
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 操作按钮 -->
+                <div class="action-buttons fade-in">
+                    <button class="action-btn secondary">
+                        <i class="fas fa-bookmark" style="margin-right: 8px;"></i>
+                        收藏
+                    </button>
+                    <button class="action-btn primary">
+                        <i class="fas fa-play" style="margin-right: 8px;"></i>
+                        继续学习
+                    </button>
+                </div>
+            </div>
+
+            <!-- 浮动操作按钮 -->
+            <div class="floating-action">
+                <i class="fas fa-comments"></i>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

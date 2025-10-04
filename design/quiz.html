@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI工程技能学习系统 - 技能测试</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --wechat-green: #07C160;
+            --wechat-blue: #10AEFF;
+            --wechat-orange: #FF9500;
+            --wechat-red: #FA5151;
+            --wechat-purple: #8A2BE2;
+            --wechat-yellow: #FFCC00;
+            --wechat-gray-1: #F7F7F7;
+            --wechat-gray-2: #EDEDED;
+            --wechat-gray-3: #D9D9D9;
+            --wechat-gray-4: #B2B2B2;
+            --wechat-gray-5: #8B8B8B;
+            --wechat-gray-6: #5B5B5B;
+            --wechat-gray-7: #353535;
+            --wechat-text-primary: #000000;
+            --wechat-text-secondary: #888888;
+            --wechat-text-tertiary: #B2B2B2;
+            --wechat-bg: #F7F7F7;
+            --wechat-card-bg: #FFFFFF;
+            --wechat-divider: #EDEDED;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .wechat-device {
+            width: 375px;
+            height: 667px;
+            background: #000;
+            border-radius: 40px;
+            padding: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .wechat-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--wechat-bg);
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .wechat-navbar {
+            height: 44px;
+            background: var(--wechat-card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 1px solid var(--wechat-divider);
+        }
+
+        .wechat-navbar-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--wechat-text-primary);
+        }
+
+        .wechat-navbar-back {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--wechat-text-primary);
+            cursor: pointer;
+        }
+
+        .wechat-capsule {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 87px;
+            height: 32px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .wechat-capsule-dot {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .wechat-capsule-dot:first-child {
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .wechat-content {
+            height: calc(100% - 44px);
+            overflow-y: auto;
+            background: var(--wechat-bg);
+        }
+
+        .quiz-header {
+            background: linear-gradient(135deg, var(--wechat-purple), var(--wechat-blue));
+            color: white;
+            padding: 24px 16px;
+            position: relative;
+        }
+
+        .quiz-progress {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .quiz-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .quiz-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .progress-dots {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .progress-dot.completed {
+            background: white;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .progress-dot.current {
+            background: white;
+            animation: pulse 2s infinite;
+        }
+
+        .timer {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .content-section {
+            background: var(--wechat-card-bg);
+            margin: 16px;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--wechat-purple);
+            color: white;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .question-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--wechat-text-primary);
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 16px;
+            border-radius: 12px;
+            border: 2px solid var(--wechat-gray-2);
+            background: var(--wechat-card-bg);
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .option-item:hover {
+            border-color: var(--wechat-purple);
+            background: rgba(138, 43, 226, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(138, 43, 226, 0.1);
+        }
+
+        .option-item.selected {
+            border-color: var(--wechat-purple);
+            background: rgba(138, 43, 226, 0.1);
+        }
+
+        .option-item.correct {
+            border-color: var(--wechat-green);
+            background: rgba(7, 193, 96, 0.1);
+        }
+
+        .option-item.incorrect {
+            border-color: var(--wechat-red);
+            background: rgba(250, 81, 81, 0.1);
+        }
+
+        .option-letter {
+            width: 28px;
+            height: 28px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 12px;
+            flex-shrink: 0;
+            background: var(--wechat-gray-1);
+            color: var(--wechat-text-secondary);
+        }
+
+        .option-item.selected .option-letter {
+            background: var(--wechat-purple);
+            color: white;
+        }
+
+        .option-item.correct .option-letter {
+            background: var(--wechat-green);
+            color: white;
+        }
+
+        .option-item.incorrect .option-letter {
+            background: var(--wechat-red);
+            color: white;
+        }
+
+        .option-text {
+            flex: 1;
+            line-height: 1.5;
+            color: var(--wechat-text-primary);
+            font-size: 16px;
+        }
+
+        .option-status {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 24px;
+            height: 24px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .option-item.correct .option-status,
+        .option-item.incorrect .option-status {
+            opacity: 1;
+        }
+
+        .option-item.correct .option-status {
+            background: var(--wechat-green);
+        }
+
+        .option-item.incorrect .option-status {
+            background: var(--wechat-red);
+        }
+
+        .quiz-navigation {
+            display: flex;
+            gap: 12px;
+            margin: 16px;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            height: 48px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            outline: none;
+        }
+
+        .nav-btn.secondary {
+            background: var(--wechat-gray-2);
+            color: var(--wechat-text-primary);
+        }
+
+        .nav-btn.secondary:hover {
+            background: var(--wechat-gray-3);
+        }
+
+        .nav-btn.primary {
+            background: var(--wechat-purple);
+            color: white;
+        }
+
+        .nav-btn.primary:hover {
+            background: #7B2CBF;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .explanation {
+            background: rgba(7, 193, 96, 0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+            border-left: 4px solid var(--wechat-green);
+        }
+
+        .explanation-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--wechat-green);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .explanation-text {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--wechat-text-secondary);
+        }
+
+        .result-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .result-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 40px;
+            background: var(--wechat-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            margin: 0 auto 20px;
+        }
+
+        .result-icon.fail {
+            background: var(--wechat-red);
+        }
+
+        .result-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--wechat-text-primary);
+            margin-bottom: 8px;
+        }
+
+        .result-score {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--wechat-green);
+            margin-bottom: 16px;
+        }
+
+        .result-score.fail {
+            color: var(--wechat-red);
+        }
+
+        .result-message {
+            font-size: 16px;
+            color: var(--wechat-text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .result-stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--wechat-text-primary);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--wechat-text-secondary);
+        }
+
+        .reward-card {
+            background: linear-gradient(135deg, var(--wechat-yellow), #FFD700);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            color: white;
+        }
+
+        .reward-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .reward-items {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .reward-item {
+            text-align: center;
+        }
+
+        .reward-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .reward-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .hint-bubble {
+            position: relative;
+            background: rgba(16, 174, 255, 0.1);
+            border: 1px solid var(--wechat-blue);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 16px;
+            font-size: 14px;
+            color: var(--wechat-blue);
+        }
+
+        .hint-bubble::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid var(--wechat-blue);
+        }
+
+        .question-image {
+            width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="wechat-device">
+        <div class="wechat-screen">
+            <!-- 顶部导航栏 -->
+            <div class="wechat-navbar">
+                <div class="wechat-navbar-back">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="wechat-navbar-title">深度学习框架测试</div>
+                <div class="wechat-capsule">
+                    <div class="wechat-capsule-dot">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="wechat-capsule-dot">
+                        <i class="fas fa-flag"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 内容区域 -->
+            <div class="wechat-content">
+                <!-- 测试头部信息 -->
+                <div class="quiz-header fade-in">
+                    <div class="quiz-progress">
+                        <div>
+                            <div class="quiz-title">技能测试</div>
+                            <div class="quiz-subtitle">完成所有题目以获得技能认证</div>
+                        </div>
+                        <div class="timer">
+                            <i class="fas fa-clock"></i>
+                            <span>08:45</span>
+                        </div>
+                    </div>
+                    <div class="progress-dots">
+                        <div class="progress-dot completed"></div>
+                        <div class="progress-dot completed"></div>
+                        <div class="progress-dot current"></div>
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot"></div>
+                    </div>
+                </div>
+
+                <!-- 题目内容 -->
+                <div class="content-section fade-in">
+                    <div class="question-number">3/5</div>
+                    <div class="question-text">
+                        以下哪个深度学习框架最适合快速原型开发和研究工作？
+                    </div>
+
+                    <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=150&fit=crop&auto=format" alt="深度学习框架对比" class="question-image">
+
+                    <div class="options-list">
+                        <div class="option-item selected">
+                            <div class="option-letter">A</div>
+                            <div class="option-text">TensorFlow</div>
+                            <div class="option-status"></div>
+                        </div>
+                        <div class="option-item">
+                            <div class="option-letter">B</div>
+                            <div class="option-text">PyTorch</div>
+                            <div class="option-status"></div>
+                        </div>
+                        <div class="option-item">
+                            <div class="option-letter">C</div>
+                            <div class="option-text">Keras</div>
+                            <div class="option-status"></div>
+                        </div>
+                        <div class="option-item">
+                            <div class="option-letter">D</div>
+                            <div class="option-text">Scikit-learn</div>
+                            <div class="option-status"></div>
+                        </div>
+                    </div>
+
+                    <div class="explanation">
+                        <div class="explanation-title">
+                            <i class="fas fa-info-circle"></i>
+                            <span>题目解析</span>
+                        </div>
+                        <div class="explanation-text">
+                            PyTorch以其动态计算图和直观的API设计而闻名，特别适合研究和快速原型开发。它的灵活性使得研究人员可以快速实现和测试新的想法。
+                        </div>
+                    </div>
+
+                    <div class="hint-bubble">
+                        <strong>💡 提示：</strong> 考虑各个框架的设计理念和主要应用场景
+                    </div>
+                </div>
+
+                <!-- 导航按钮 -->
+                <div class="quiz-navigation fade-in">
+                    <button class="nav-btn secondary">
+                        <i class="fas fa-chevron-left" style="margin-right: 8px;"></i>
+                        上一题
+                    </button>
+                    <button class="nav-btn primary">
+                        下一题
+                        <i class="fas fa-chevron-right" style="margin-left: 8px;"></i>
+                    </button>
+                </div>
+
+                <!-- 如果是最后一题，显示结果屏幕 -->
+                <!--
+                <div class="content-section fade-in result-screen">
+                    <div class="result-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="result-title">恭喜通过！</div>
+                    <div class="result-score">85%</div>
+                    <div class="result-message">
+                        你已经成功掌握了深度学习框架的核心概念
+                    </div>
+
+                    <div class="result-stats">
+                        <div class="result-stat">
+                            <div class="stat-value">5</div>
+                            <div class="stat-label">答题总数</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="stat-value">4</div>
+                            <div class="stat-label">正确答题</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="stat-value">1</div>
+                            <div class="stat-label">错误答题</div>
+                        </div>
+                    </div>
+
+                    <div class="reward-card">
+                        <div class="reward-title">
+                            <i class="fas fa-gift"></i>
+                            <span>获得奖励</span>
+                        </div>
+                        <div class="reward-items">
+                            <div class="reward-item">
+                                <div class="reward-value">+150</div>
+                                <div class="reward-label">经验值</div>
+                            </div>
+                            <div class="reward-item">
+                                <div class="reward-value">+1</div>
+                                <div class="reward-label">技能点</div>
+                            </div>
+                            <div class="reward-item">
+                                <div class="reward-value">解锁</div>
+                                <div class="reward-label">新技能</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-navigation">
+                        <button class="nav-btn secondary">
+                            <i class="fas fa-redo" style="margin-right: 8px;"></i>
+                            重新测试
+                        </button>
+                        <button class="nav-btn primary">
+                            <i class="fas fa-check" style="margin-right: 8px;"></i>
+                            完成学习
+                        </button>
+                    </div>
+                </div>
+                -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
